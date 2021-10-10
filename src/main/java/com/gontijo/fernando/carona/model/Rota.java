@@ -8,9 +8,11 @@ import java.util.Date;
 @Table(name = "tb_rota")
 public class Rota implements Serializable {
 
+    private static final long serialVersionUID = 1L;
+
     @Id
     @Column(name = "id_rota", nullable = false)
-    private int id;
+    private Integer id;
 
     @Column(name = "origem", nullable = false)
     private String origem;
@@ -79,7 +81,7 @@ public class Rota implements Serializable {
         this.usuario = usuario;
     }
 
-    public int getId() {
+    public Integer getId() {
         return id;
     }
 

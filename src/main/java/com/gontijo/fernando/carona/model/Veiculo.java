@@ -7,9 +7,11 @@ import java.io.Serializable;
 @Table(name = "tb_veiculo")
 public class Veiculo implements Serializable {
 
+    private static final long serialVersionUID = 1L;
+
     @Id
     @Column(name = "id_veiculo", nullable = false)
-    private int id;
+    private Integer id;
 
     @Column(name = "capacidade", nullable = false)
     private int capacidade;
@@ -56,7 +58,7 @@ public class Veiculo implements Serializable {
         this.usuario = usuario;
     }
 
-    public int getId() {
+    public Integer getId() {
         return id;
     }
 

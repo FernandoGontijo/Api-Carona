@@ -10,9 +10,11 @@ import java.io.Serializable;
 @Table(name = "tb_usuario")
 public class Usuario implements Serializable {
 
+    private static final long serialVersionUID = 1L;
+
     @Id
     @Column(name = "id_usuario", nullable = false)
-    private int id;
+    private Integer id;
 
     @Column(name = "email", nullable = false)
     private String email;
@@ -59,7 +61,7 @@ public class Usuario implements Serializable {
         this.telefone = telefone;
     }
 
-    public int getId() {
+    public Integer getId() {
         return id;
     }
 }
