@@ -17,6 +17,11 @@ public class UsuarioService {
     @Autowired
     private UsuarioRepository repo;
 
+    public Usuario insert(Usuario usuario) {
+       repo.save(usuario);
+       return repo.save(usuario);
+    }
+
     public Usuario find(Integer id) {
 
         Optional<Usuario> usuario = repo.findById(id);

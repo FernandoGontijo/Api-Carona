@@ -20,6 +20,12 @@ public class UsuarioController {
     @Autowired
     private UsuarioService service;
 
+    @RequestMapping(value="/", method= RequestMethod.POST)
+    public ResponseEntity<Usuario> insert(@RequestBody Usuario usuario) {
+        service.insert(usuario);
+        return ResponseEntity.noContent().build();
+    }
+
     @RequestMapping(value="/{id}", method= RequestMethod.GET)
     public ResponseEntity<Usuario> find(@PathVariable Integer id) {
         Usuario usuario = service.find(id);
