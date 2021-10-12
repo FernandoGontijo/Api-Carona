@@ -1,31 +1,37 @@
-package com.gontijo.fernando.carona.model;
+package com.gontijo.fernando.carona.dto;
 
-import javax.persistence.*;
 import java.io.Serializable;
 
-@Entity
-@Table(name = "tb_usuario")
-public class Usuario implements Serializable {
+public class UsuarioDTO implements Serializable {
+
 
     private static final long serialVersionUID = 1L;
 
-    @Id
-    @Column(name = "id_usuario", nullable = false)
-    @GeneratedValue(strategy=GenerationType.IDENTITY)
+
     private Integer id;
 
-    @Column(name = "email", nullable = false)
     private String email;
 
-    @Column(name = "nome", nullable = false)
     private String nome;
 
-    @Column(name = "senha", nullable = false)
     private String senha;
 
-    @Column(name = "telefone", nullable = false)
     private int telefone;
 
+    public UsuarioDTO() {
+    }
+
+    public UsuarioDTO(Integer id, String email, String nome, String senha, int telefone) {
+        this.id = id;
+        this.email = email;
+        this.nome = nome;
+        this.senha = senha;
+        this.telefone = telefone;
+    }
+
+    public Integer getId() {
+        return id;
+    }
 
     public String getEmail() {
         return email;
@@ -57,9 +63,5 @@ public class Usuario implements Serializable {
 
     public void setTelefone(int telefone) {
         this.telefone = telefone;
-    }
-
-    public Integer getId() {
-        return id;
     }
 }

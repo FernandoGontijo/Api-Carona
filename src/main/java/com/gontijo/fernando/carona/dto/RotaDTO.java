@@ -1,38 +1,44 @@
-package com.gontijo.fernando.carona.model;
+package com.gontijo.fernando.carona.dto;
 
-import javax.persistence.*;
+import com.gontijo.fernando.carona.model.Usuario;
+
 import java.io.Serializable;
 import java.util.Date;
 
-@Entity
-@Table(name = "tb_rota")
-public class Rota implements Serializable {
+public class RotaDTO implements Serializable {
 
     private static final long serialVersionUID = 1L;
 
-    @Id
-    @Column(name = "id_rota", nullable = false)
-    @GeneratedValue(strategy=GenerationType.IDENTITY)
     private Integer id;
 
-    @Column(name = "origem", nullable = false)
     private String origem;
 
-    @Column(name = "destino", nullable = false)
     private String destino;
 
-    @Column(name = "horario")
     private Date horario;
 
-    @Column(name = "preco")
     private Double preco;
 
-    @Column(name = "vagas")
     private int vagas;
 
-    @ManyToOne(cascade = CascadeType.MERGE)
-    @JoinColumn(name = "id_usuario", foreignKey = @ForeignKey(name = "id_usuario"))
     private Usuario usuario;
+
+    public RotaDTO() {
+    }
+
+    public RotaDTO(Integer id, String origem, String destino, Date horario, Double preco, int vagas, Usuario usuario) {
+        this.id = id;
+        this.origem = origem;
+        this.destino = destino;
+        this.horario = horario;
+        this.preco = preco;
+        this.vagas = vagas;
+        this.usuario = usuario;
+    }
+
+    public Integer getId() {
+        return id;
+    }
 
     public String getOrigem() {
         return origem;
@@ -81,9 +87,4 @@ public class Rota implements Serializable {
     public void setUsuario(Usuario usuario) {
         this.usuario = usuario;
     }
-
-    public Integer getId() {
-        return id;
-    }
-
 }

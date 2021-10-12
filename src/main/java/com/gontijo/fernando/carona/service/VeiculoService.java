@@ -1,5 +1,6 @@
 package com.gontijo.fernando.carona.service;
 
+import com.gontijo.fernando.carona.model.Usuario;
 import com.gontijo.fernando.carona.model.Veiculo;
 import com.gontijo.fernando.carona.repositories.VeiculoRepository;
 import com.gontijo.fernando.carona.service.exceptions.DataIntegrityException;
@@ -16,6 +17,10 @@ public class VeiculoService {
 
     @Autowired
     private VeiculoRepository repo;
+
+    public Veiculo insert(Veiculo veiculo) {
+        return repo.save(veiculo);
+    }
 
     public Veiculo find(Integer id) {
 

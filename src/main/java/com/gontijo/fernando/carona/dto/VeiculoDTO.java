@@ -1,31 +1,37 @@
-package com.gontijo.fernando.carona.model;
+package com.gontijo.fernando.carona.dto;
 
-import javax.persistence.*;
+import com.gontijo.fernando.carona.model.Usuario;
+
 import java.io.Serializable;
 
-@Entity
-@Table(name = "tb_veiculo")
-public class Veiculo implements Serializable {
+public class VeiculoDTO implements Serializable {
 
     private static final long serialVersionUID = 1L;
 
-    @Id
-    @Column(name = "id_veiculo", nullable = false)
-    @GeneratedValue(strategy=GenerationType.IDENTITY)
     private Integer id;
 
-    @Column(name = "capacidade", nullable = false)
     private int capacidade;
 
-    @Column(name = "modelo")
     private String modelo;
 
-    @Column(name = "ano")
     private String ano;
 
-    @ManyToOne(cascade = CascadeType.MERGE)
-    @JoinColumn(name = "id_usuario", foreignKey = @ForeignKey(name = "id_usuario"))
     private Usuario usuario;
+
+    public VeiculoDTO() {
+    }
+
+    public VeiculoDTO(Integer id, int capacidade, String modelo, String ano, Usuario usuario) {
+        this.id = id;
+        this.capacidade = capacidade;
+        this.modelo = modelo;
+        this.ano = ano;
+        this.usuario = usuario;
+    }
+
+    public Integer getId() {
+        return id;
+    }
 
     public int getCapacidade() {
         return capacidade;
@@ -58,9 +64,4 @@ public class Veiculo implements Serializable {
     public void setUsuario(Usuario usuario) {
         this.usuario = usuario;
     }
-
-    public Integer getId() {
-        return id;
-    }
-
 }

@@ -1,6 +1,7 @@
 package com.gontijo.fernando.carona.service;
 
 import com.gontijo.fernando.carona.model.Rota;
+import com.gontijo.fernando.carona.model.Veiculo;
 import com.gontijo.fernando.carona.repositories.RotaRepository;
 import com.gontijo.fernando.carona.service.exceptions.DataIntegrityException;
 import com.gontijo.fernando.carona.service.exceptions.ObjectNotFoundException;
@@ -17,8 +18,11 @@ public class RotaService {
     @Autowired
     private RotaRepository repo;
 
-    public Rota find(Integer id) {
+    public Rota insert(Rota rota) {
+        return repo.save(rota);
+    }
 
+    public Rota find(Integer id) {
         Optional<Rota> rota = repo.findById(id);
         return rota.orElseThrow(() -> new ObjectNotFoundException(
                 "Rota não encontrado! Id: " + id + ", Tipo: " + Rota.class.getName()));

@@ -21,6 +21,12 @@ public class RotaController {
     @Autowired
     private RotaService service;
 
+    @RequestMapping(value="/", method= RequestMethod.POST)
+    public ResponseEntity<Rota> insert(@RequestBody Rota rota) {
+        service.insert(rota);
+        return ResponseEntity.noContent().build();
+    }
+
     @RequestMapping(value="/{id}", method= RequestMethod.GET)
     public ResponseEntity<Rota> find(@PathVariable Integer id) {
         Rota rota = service.find(id);

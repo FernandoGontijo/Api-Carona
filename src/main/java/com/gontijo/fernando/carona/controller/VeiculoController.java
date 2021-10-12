@@ -1,5 +1,6 @@
 package com.gontijo.fernando.carona.controller;
 
+import com.gontijo.fernando.carona.model.Usuario;
 import com.gontijo.fernando.carona.model.Veiculo;
 import com.gontijo.fernando.carona.service.VeiculoService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -19,25 +20,31 @@ public class VeiculoController {
     @Autowired
     private VeiculoService service;
 
-    @RequestMapping(value="/{id}", method= RequestMethod.GET)
+    @RequestMapping(value="/adicionar", method= RequestMethod.POST)
+    public ResponseEntity<Veiculo> insert(@RequestBody Veiculo veiculo) {
+        service.insert(veiculo);
+        return ResponseEntity.noContent().build();
+    }
+
+    @RequestMapping(value="/buscar/{id}", method= RequestMethod.GET)
     public ResponseEntity<Veiculo> find(@PathVariable Integer id) {
         Veiculo veiculo = service.find(id);
         return ResponseEntity.ok().body(veiculo);
     }
 
-    @RequestMapping(value="/{id}", method=RequestMethod.PUT)
+    @RequestMapping(value="/atualizar/{id}", method=RequestMethod.PUT)
     public ResponseEntity<Void> update(@RequestBody Veiculo veiculo, @PathVariable Integer id){
         service.update(veiculo);
         return ResponseEntity.noContent().build();
     }
 
-    @RequestMapping(value="/{id}", method=RequestMethod.DELETE)
+    @RequestMapping(value="/excluir/{id}", method=RequestMethod.DELETE)
     public ResponseEntity<Void> delete(@PathVariable Integer id) {
         service.delete(id);
         return ResponseEntity.noContent().build();
     }
 
-    @RequestMapping(method=RequestMethod.GET)
+    @RequestMapping(value="/todos", method=RequestMethod.GET)
     public ResponseEntity<List<Veiculo>> findAll() {
         List<Veiculo> listaVeiculo = service.findAll();
         return ResponseEntity.ok().body(listaVeiculo);

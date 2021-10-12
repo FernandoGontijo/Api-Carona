@@ -18,7 +18,6 @@ public class UsuarioService {
     private UsuarioRepository repo;
 
     public Usuario insert(Usuario usuario) {
-       repo.save(usuario);
        return repo.save(usuario);
     }
 
