@@ -1,10 +1,10 @@
 package com.gontijo.fernando.carona.service;
 
-import com.gontijo.fernando.carona.model.Usuario;
+import com.gontijo.fernando.carona.dto.VeiculoDTO;
 import com.gontijo.fernando.carona.model.Veiculo;
 import com.gontijo.fernando.carona.repositories.VeiculoRepository;
-import com.gontijo.fernando.carona.service.exceptions.DataIntegrityException;
-import com.gontijo.fernando.carona.service.exceptions.ObjectNotFoundException;
+import com.gontijo.fernando.carona.exceptions.DataIntegrityException;
+import com.gontijo.fernando.carona.exceptions.ObjectNotFoundException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.stereotype.Service;
@@ -18,8 +18,22 @@ public class VeiculoService {
     @Autowired
     private VeiculoRepository repo;
 
-    public Veiculo insert(Veiculo veiculo) {
-        return repo.save(veiculo);
+    public String cadastrarVeiculo(Veiculo veiculo) {
+
+        veiculo.setId(null);
+
+        try {
+            if (repo.findVeiculoByPlaca(veiculo.getPlaca()) > 0 ) {
+                return "Veículo já cadastrado!";
+            }
+
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+
+        repo.save(veiculo);
+
+        return "Veículo cadastrado com sucesso!";
     }
 
     public Veiculo find(Integer id) {
@@ -57,4 +71,14 @@ public class VeiculoService {
         return repo.findAll();
     }
 
+    public Veiculo fromDTO(VeiculoDTO veiculoDto) {
+
+        return new Veiculo(veiculoDto.getId(),
+                           veiculoDto.getCapacidade(),
+                           veiculoDto.getModelo(),
+                           veiculoDto.getAno(),
+                           veiculoDto.getPlaca(),
+                           veiculoDto.getUsuario());
+
+    }
 }

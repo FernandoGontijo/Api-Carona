@@ -1,4 +1,4 @@
-package com.gontijo.fernando.carona.service.exceptions;
+package com.gontijo.fernando.carona.exceptions;
 
 public class DataIntegrityException extends RuntimeException{
 

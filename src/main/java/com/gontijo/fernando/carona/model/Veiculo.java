@@ -23,9 +23,25 @@ public class Veiculo implements Serializable {
     @Column(name = "ano")
     private String ano;
 
+    @Column(name = "placa")
+    private String placa;
+
+
     @ManyToOne(cascade = CascadeType.MERGE)
     @JoinColumn(name = "id_usuario", foreignKey = @ForeignKey(name = "id_usuario"))
     private Usuario usuario;
+
+    public Veiculo(Integer id, int capacidade, String modelo, String ano, String placa, Usuario usuario) {
+        this.id = id;
+        this.capacidade = capacidade;
+        this.modelo = modelo;
+        this.ano = ano;
+        this.placa = placa;
+        this.usuario = usuario;
+    }
+
+    public Veiculo() {
+    }
 
     public int getCapacidade() {
         return capacidade;
@@ -63,4 +79,15 @@ public class Veiculo implements Serializable {
         return id;
     }
 
+    public void setId(Integer id) {
+        this.id = id;
+    }
+
+    public String getPlaca() {
+        return placa;
+    }
+
+    public void setPlaca(String placa) {
+        this.placa = placa;
+    }
 }

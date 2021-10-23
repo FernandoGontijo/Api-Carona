@@ -1,5 +1,6 @@
 package com.gontijo.fernando.carona.controller;
 
+import com.gontijo.fernando.carona.dto.UsuarioDTO;
 import com.gontijo.fernando.carona.model.Usuario;
 import com.gontijo.fernando.carona.service.UsuarioService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -9,7 +10,6 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
-
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -20,34 +20,37 @@ public class UsuarioController {
     @Autowired
     private UsuarioService service;
 
-    @RequestMapping(value="/", method= RequestMethod.POST)
-    public ResponseEntity<Usuario> insert(@RequestBody Usuario usuario) {
-        service.insert(usuario);
-        return ResponseEntity.noContent().build();
+    @RequestMapping(value="/adicionar",method= RequestMethod.POST)
+    public ResponseEntity<String> adicionar(@RequestBody UsuarioDTO usuarioDTO) throws Exception {
+        Usuario usuario = service.fromDTO(usuarioDTO);
+        return ResponseEntity.ok(service.cadastrarUsuario(usuario));
     }
 
-    @RequestMapping(value="/{id}", method= RequestMethod.GET)
-    public ResponseEntity<Usuario> find(@PathVariable Integer id) {
-        Usuario usuario = service.find(id);
+    @RequestMapping(value="/buscar/{id}", method= RequestMethod.GET)
+    public ResponseEntity<Usuario> buscarUsuario(@PathVariable Integer id) {
+        Usuario usuario = service.buscarUsuarioPorId(id);
         return ResponseEntity.ok().body(usuario);
     }
 
-    @RequestMapping(value="/{id}", method=RequestMethod.PUT)
-    public ResponseEntity<Void> update(@RequestBody Usuario usuario, @PathVariable Integer id){
-        service.update(usuario);
+    @RequestMapping(value="/atualizar/{id}", method=RequestMethod.PUT)
+    public ResponseEntity<Void> atualizarUsuario(@RequestBody UsuarioDTO usuarioDTO, @PathVariable Integer id){
+        Usuario usuario = service.fromDTO(usuarioDTO);
+        usuario.setId(id);
+        service.atualizarUsuario(usuario);
         return ResponseEntity.noContent().build();
     }
 
-    @RequestMapping(value="/{id}", method=RequestMethod.DELETE)
-    public ResponseEntity<Void> delete(@PathVariable Integer id) {
-        service.delete(id);
+    @RequestMapping(value="/excluir/{id}", method=RequestMethod.DELETE)
+    public ResponseEntity<Void> excluirUsuario(@PathVariable Integer id) {
+        service.excluirUsuario(id);
         return ResponseEntity.noContent().build();
     }
 
-    @RequestMapping(method=RequestMethod.GET)
-    public ResponseEntity<List<Usuario>> findAll() {
-        List<Usuario> listaUsuario = service.findAll();
-        return ResponseEntity.ok().body(listaUsuario);
+    @RequestMapping(value="/todos",method=RequestMethod.GET)
+    public ResponseEntity<List<UsuarioDTO>> buscarTodos() {
+        List<Usuario> listaUsuario = service.buscarTodos();
+        List<UsuarioDTO> listaUsuarioDTO = listaUsuario.stream().map(usuario -> new UsuarioDTO(usuario)).collect(Collectors.toList());
+        return ResponseEntity.ok().body(listaUsuarioDTO);
     }
 
 }

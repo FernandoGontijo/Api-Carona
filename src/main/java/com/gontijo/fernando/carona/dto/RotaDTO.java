@@ -1,5 +1,6 @@
 package com.gontijo.fernando.carona.dto;
 
+import com.gontijo.fernando.carona.model.Rota;
 import com.gontijo.fernando.carona.model.Usuario;
 
 import java.io.Serializable;
@@ -21,19 +22,42 @@ public class RotaDTO implements Serializable {
 
     private int vagas;
 
+    private String obs;
+
     private Usuario usuario;
 
     public RotaDTO() {
     }
 
-    public RotaDTO(Integer id, String origem, String destino, Date horario, Double preco, int vagas, Usuario usuario) {
+    public RotaDTO(Integer id, String origem, String destino, Date horario, Double preco, int vagas, String obs, Usuario usuario) {
         this.id = id;
         this.origem = origem;
         this.destino = destino;
         this.horario = horario;
         this.preco = preco;
         this.vagas = vagas;
+        this.obs = obs;
         this.usuario = usuario;
+    }
+
+    public RotaDTO(Rota rota) {
+        this.id = rota.getId();
+        this.origem = rota.getOrigem();
+        this.destino = rota.getDestino();
+        this.horario = rota.getHorario();
+        this.preco = rota.getPreco();
+        this.vagas = rota.getVagas();
+        this.obs = rota.getObs();
+        this.usuario = rota.getUsuario();
+    }
+
+
+    public String getObs() {
+        return obs;
+    }
+
+    public void setObs(String obs) {
+        this.obs = obs;
     }
 
     public Integer getId() {

@@ -1,10 +1,10 @@
 package com.gontijo.fernando.carona.service;
 
+import com.gontijo.fernando.carona.dto.RotaDTO;
 import com.gontijo.fernando.carona.model.Rota;
-import com.gontijo.fernando.carona.model.Veiculo;
 import com.gontijo.fernando.carona.repositories.RotaRepository;
-import com.gontijo.fernando.carona.service.exceptions.DataIntegrityException;
-import com.gontijo.fernando.carona.service.exceptions.ObjectNotFoundException;
+import com.gontijo.fernando.carona.exceptions.DataIntegrityException;
+import com.gontijo.fernando.carona.exceptions.ObjectNotFoundException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.stereotype.Service;
@@ -43,11 +43,9 @@ public class RotaService {
         if(rota.getHorario() != null){
             rotaAtualizada.setHorario(rota.getHorario());
         }
-
         if(rota.getPreco() != null){
             rotaAtualizada.setPreco(rota.getPreco());
         }
-
     }
 
     public void delete(Integer id) {
@@ -62,4 +60,18 @@ public class RotaService {
     public List<Rota> findAll(){
         return repo.findAll();
     }
+
+    public Rota fromDTO(RotaDTO rotaDto) {
+
+        return new Rota(rotaDto.getId(),
+                rotaDto.getOrigem(),
+                rotaDto.getDestino(),
+                rotaDto.getHorario(),
+                rotaDto.getPreco(),
+                rotaDto.getVagas(),
+                rotaDto.getObs(),
+                rotaDto.getUsuario());
+
+    }
+
 }

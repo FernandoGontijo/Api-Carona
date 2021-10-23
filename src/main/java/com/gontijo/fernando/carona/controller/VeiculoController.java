@@ -1,6 +1,6 @@
 package com.gontijo.fernando.carona.controller;
 
-import com.gontijo.fernando.carona.model.Usuario;
+import com.gontijo.fernando.carona.dto.VeiculoDTO;
 import com.gontijo.fernando.carona.model.Veiculo;
 import com.gontijo.fernando.carona.service.VeiculoService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -10,8 +10,11 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 
+import java.net.URI;
 import java.util.List;
+import java.util.stream.Collectors;
 
 @Controller
 @RequestMapping(value="/veiculo")
@@ -21,9 +24,9 @@ public class VeiculoController {
     private VeiculoService service;
 
     @RequestMapping(value="/adicionar", method= RequestMethod.POST)
-    public ResponseEntity<Veiculo> insert(@RequestBody Veiculo veiculo) {
-        service.insert(veiculo);
-        return ResponseEntity.noContent().build();
+    public ResponseEntity<String> insert(@RequestBody VeiculoDTO veiculoDTO) {
+        Veiculo veiculo = service.fromDTO(veiculoDTO);
+        return ResponseEntity.ok(service.cadastrarVeiculo(veiculo));
     }
 
     @RequestMapping(value="/buscar/{id}", method= RequestMethod.GET)
@@ -45,8 +48,9 @@ public class VeiculoController {
     }
 
     @RequestMapping(value="/todos", method=RequestMethod.GET)
-    public ResponseEntity<List<Veiculo>> findAll() {
+    public ResponseEntity<List<VeiculoDTO>> findAll() {
         List<Veiculo> listaVeiculo = service.findAll();
-        return ResponseEntity.ok().body(listaVeiculo);
+        List<VeiculoDTO> listaVeiculoDTO = listaVeiculo.stream().map(veiculo -> new VeiculoDTO(veiculo)).collect(Collectors.toList());
+        return ResponseEntity.ok().body(listaVeiculoDTO);
     }
 }

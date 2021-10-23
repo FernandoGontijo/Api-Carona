@@ -1,5 +1,7 @@
 package com.gontijo.fernando.carona.dto;
 
+import com.gontijo.fernando.carona.model.Usuario;
+
 import java.io.Serializable;
 
 public class UsuarioDTO implements Serializable {
@@ -16,17 +18,25 @@ public class UsuarioDTO implements Serializable {
 
     private String senha;
 
-    private int telefone;
+    private Long telefone;
 
     public UsuarioDTO() {
     }
 
-    public UsuarioDTO(Integer id, String email, String nome, String senha, int telefone) {
+    public UsuarioDTO(Integer id, String email, String nome, String senha, Long telefone) {
         this.id = id;
         this.email = email;
         this.nome = nome;
         this.senha = senha;
         this.telefone = telefone;
+    }
+
+    public UsuarioDTO(Usuario usuario) {
+        this.id = usuario.getId();
+        this.email = usuario.getEmail();
+        this.nome = usuario.getNome();
+        this.senha = usuario.getSenha();
+        this.telefone = usuario.getTelefone();
     }
 
     public Integer getId() {
@@ -57,11 +67,11 @@ public class UsuarioDTO implements Serializable {
         this.senha = senha;
     }
 
-    public int getTelefone() {
+    public Long getTelefone() {
         return telefone;
     }
 
-    public void setTelefone(int telefone) {
+    public void setTelefone(Long telefone) {
         this.telefone = telefone;
     }
 }

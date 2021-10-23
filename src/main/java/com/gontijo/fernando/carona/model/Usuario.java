@@ -24,8 +24,18 @@ public class Usuario implements Serializable {
     private String senha;
 
     @Column(name = "telefone", nullable = false)
-    private int telefone;
+    private Long telefone;
 
+    public Usuario(Integer id, String email, String nome, String senha, Long telefone) {
+        this.id = id;
+        this.email = email;
+        this.nome = nome;
+        this.senha = senha;
+        this.telefone = telefone;
+    }
+
+    public Usuario() {
+    }
 
     public String getEmail() {
         return email;
@@ -51,12 +61,16 @@ public class Usuario implements Serializable {
         this.senha = senha;
     }
 
-    public int getTelefone() {
+    public Long getTelefone() {
         return telefone;
     }
 
-    public void setTelefone(int telefone) {
+    public void setTelefone(Long telefone) {
         this.telefone = telefone;
+    }
+
+    public void setId(Integer id) {
+        this.id = id;
     }
 
     public Integer getId() {

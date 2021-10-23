@@ -30,9 +30,35 @@ public class Rota implements Serializable {
     @Column(name = "vagas")
     private int vagas;
 
+    @Column(name = "obs")
+    private String obs;
+
     @ManyToOne(cascade = CascadeType.MERGE)
     @JoinColumn(name = "id_usuario", foreignKey = @ForeignKey(name = "id_usuario"))
     private Usuario usuario;
+
+    public Rota(Integer id, String origem, String destino, Date horario, Double preco, int vagas, String obs, Usuario usuario) {
+        this.id = id;
+        this.origem = origem;
+        this.destino = destino;
+        this.horario = horario;
+        this.preco = preco;
+        this.vagas = vagas;
+        this.obs = obs;
+        this.usuario = usuario;
+    }
+
+    public Rota() {
+    }
+
+    public String getObs() {
+        return obs;
+    }
+
+    public void setObs(String obs) {
+        this.obs = obs;
+    }
+
 
     public String getOrigem() {
         return origem;
@@ -86,4 +112,7 @@ public class Rota implements Serializable {
         return id;
     }
 
+    public void setId(Integer id) {
+        this.id = id;
+    }
 }
