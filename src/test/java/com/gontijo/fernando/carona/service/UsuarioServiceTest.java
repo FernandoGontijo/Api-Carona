@@ -13,9 +13,6 @@ import org.springframework.boot.test.mock.mockito.MockBean;
 import org.springframework.context.annotation.Bean;
 import org.springframework.test.context.junit4.SpringRunner;
 
-import java.util.ArrayList;
-import java.util.List;
-import java.util.function.Supplier;
 
 @RunWith(SpringRunner.class)
 public class UsuarioServiceTest {

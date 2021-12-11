@@ -31,19 +31,19 @@ public class VeiculoController {
 
     @RequestMapping(value="/buscar/{id}", method= RequestMethod.GET)
     public ResponseEntity<Veiculo> find(@PathVariable Integer id) {
-        Veiculo veiculo = service.find(id);
+        Veiculo veiculo = service.buscarVeiculo(id);
         return ResponseEntity.ok().body(veiculo);
     }
 
     @RequestMapping(value="/atualizar/{id}", method=RequestMethod.PUT)
     public ResponseEntity<Void> update(@RequestBody Veiculo veiculo, @PathVariable Integer id){
-        service.update(veiculo);
+        service.atualizarVeiculo(veiculo);
         return ResponseEntity.noContent().build();
     }
 
     @RequestMapping(value="/excluir/{id}", method=RequestMethod.DELETE)
     public ResponseEntity<Void> delete(@PathVariable Integer id) {
-        service.delete(id);
+        service.excuirVeiculo(id);
         return ResponseEntity.noContent().build();
     }
 

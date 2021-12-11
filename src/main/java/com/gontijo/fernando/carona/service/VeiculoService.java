@@ -21,30 +21,25 @@ public class VeiculoService {
     public String cadastrarVeiculo(Veiculo veiculo) {
 
         veiculo.setId(null);
-
         try {
             if (repo.findVeiculoByPlaca(veiculo.getPlaca()) > 0 ) {
                 return "Veículo já cadastrado!";
             }
-
         } catch (Exception e) {
             e.printStackTrace();
         }
-
         repo.save(veiculo);
-
         return "Veículo cadastrado com sucesso!";
     }
 
-    public Veiculo find(Integer id) {
-
+    public Veiculo buscarVeiculo(Integer id) {
         Optional<Veiculo> veiculo = repo.findById(id);
         return veiculo.orElseThrow(() -> new ObjectNotFoundException(
                 "Veiculo não encontrado! Id: " + id + ", Tipo: " + Veiculo.class.getName()));
     }
 
-    public Veiculo update(Veiculo veiculo) {
-        Veiculo veiculoAtualizado = find(veiculo.getId());
+    public Veiculo atualizarVeiculo(Veiculo veiculo) {
+        Veiculo veiculoAtualizado = buscarVeiculo(veiculo.getId());
         atualizarDadosVeiculo(veiculoAtualizado, veiculo);
         return repo.save(veiculoAtualizado);
     }
@@ -57,14 +52,13 @@ public class VeiculoService {
     }
 
 
-    public void delete(Integer id) {
-        find(id);
+    public void excuirVeiculo(Integer id) {
+        buscarVeiculo(id);
         try {
             repo.deleteById(id);
         } catch (DataIntegrityViolationException e) {
             throw new DataIntegrityException("Não é possível excluir porque há entidades relacionadas");
         }
-
     }
 
     public List<Veiculo> findAll(){
@@ -72,13 +66,11 @@ public class VeiculoService {
     }
 
     public Veiculo fromDTO(VeiculoDTO veiculoDto) {
-
         return new Veiculo(veiculoDto.getId(),
                            veiculoDto.getCapacidade(),
                            veiculoDto.getModelo(),
                            veiculoDto.getAno(),
                            veiculoDto.getPlaca(),
                            veiculoDto.getUsuario());
-
     }
 }
