@@ -4,6 +4,8 @@ import com.gontijo.fernando.carona.dto.UsuarioDTO;
 import com.gontijo.fernando.carona.model.Usuario;
 import com.gontijo.fernando.carona.service.UsuarioService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.repository.query.Param;
+import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -52,5 +54,23 @@ public class UsuarioController {
         List<UsuarioDTO> listaUsuarioDTO = listaUsuario.stream().map(usuario -> new UsuarioDTO(usuario)).collect(Collectors.toList());
         return ResponseEntity.ok().body(listaUsuarioDTO);
     }
+
+
+    @RequestMapping(value="/recuperarSenha",method= RequestMethod.POST, produces = MediaType.APPLICATION_JSON_VALUE)
+    public ResponseEntity<String> recuperarSenha(@RequestBody UsuarioDTO usuarioDTO) throws Exception {
+        Usuario usuario = service.fromDTO(usuarioDTO);
+        return ResponseEntity.ok( service.recuperarSenha(usuario.getEmail()));
+    }
+
+    @RequestMapping(value="/trocarSenha",method= RequestMethod.POST, produces = MediaType.APPLICATION_JSON_VALUE)
+    public ResponseEntity<String> trocarSenha(@Param(value = "token") String token) throws Exception {
+        return ResponseEntity.ok( service.trocarSenha(token));
+    }
+
+
+
+
+
+
 
 }

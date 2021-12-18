@@ -15,6 +15,9 @@ public interface UsuarioRepository extends JpaRepository<Usuario, Integer> {
     @Query(value = "SELECT * FROM carona.tb_usuario WHERE email = ?1", nativeQuery = true)
     Usuario findByEmail(String email);
 
+    @Query(value = "SELECT * FROM carona.tb_usuario WHERE token_senha = ?1", nativeQuery = true)
+    Usuario findByTokenSenha(String tokenSenha);
+
 
 
 }

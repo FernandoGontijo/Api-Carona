@@ -49,7 +49,7 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
     protected void configure(HttpSecurity httpSecurity) throws Exception {
         httpSecurity.csrf().disable()
 // Não cheque essas requisições
-                .authorizeRequests().antMatchers("/usuario/adicionar", "/usuario/todos", "/authenticate").permitAll().
+                .authorizeRequests().antMatchers("/usuario/adicionar", "/usuario/todos", "/usuario/recuperarSenha", "/usuario/trocarSenha", "/authenticate").permitAll().
 // Qualquer outra requisição deve ser checada
         anyRequest().authenticated().and().
                 exceptionHandling().authenticationEntryPoint(jwtAuthenticationEntryPoint).and().sessionManagement()

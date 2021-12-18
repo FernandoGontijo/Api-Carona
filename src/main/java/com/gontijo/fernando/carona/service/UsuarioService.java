@@ -5,8 +5,11 @@ import com.gontijo.fernando.carona.model.Usuario;
 import com.gontijo.fernando.carona.repositories.UsuarioRepository;
 import com.gontijo.fernando.carona.exceptions.DataIntegrityException;
 import com.gontijo.fernando.carona.exceptions.ObjectNotFoundException;
+import com.gontijo.fernando.carona.security.JwtTokenUtil;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.DataIntegrityViolationException;
+import org.springframework.mail.SimpleMailMessage;
+import org.springframework.mail.javamail.JavaMailSender;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 
@@ -20,6 +23,12 @@ public class UsuarioService {
 
     @Autowired
     private UsuarioRepository repo;
+
+    @Autowired
+    private JwtTokenUtil jwtTokenUtil;
+
+    @Autowired
+    private JavaMailSender mailSender;
 
     public String cadastrarUsuario(Usuario usuario) throws Exception {
         usuario.setId(null);
@@ -105,5 +114,59 @@ public class UsuarioService {
         }
         return result;
     }
+
+    public String recuperarSenha(String email) {
+
+        Usuario usuario = getByEmail(email);
+
+        if(usuario != null ){
+
+             final String token = jwtTokenUtil.generateToken(usuario.getEmail());
+             usuario.setTokenSenha(token);
+             repo.save(usuario);
+             return(enviarEmail(usuario));
+
+        } else {
+            return "Email inválido!";
+        }
+
+    }
+
+
+    public String enviarEmail(Usuario usuario) {
+        SimpleMailMessage message = new SimpleMailMessage();
+
+        message.setText("Recuperar senha Carona");
+        message.setText("Acesse o link abaixo para recuperar sua senha:");
+        message.setText("localhost:8080/usuario/trocarSenha?token=" + usuario.getTokenSenha());
+        message.setTo(usuario.getEmail());
+        message.setFrom("fernandogontijos97@gmail.com");
+
+        try {
+            mailSender.send(message);
+            return "Email enviado com sucesso!";
+        } catch (Exception e) {
+            e.printStackTrace();
+            return "Erro ao enviar email.";
+        }
+    }
+
+
+
+    public String trocarSenha(String token){
+
+        Usuario usuario = repo.findByTokenSenha(token);
+
+        if(usuario != null){
+            return "Sucesso!";
+        } else {
+            return "Erro!";
+        }
+
+
+
+    }
+
+
 
 }

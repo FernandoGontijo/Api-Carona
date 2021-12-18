@@ -20,15 +20,18 @@ public class UsuarioDTO implements Serializable {
 
     private Long telefone;
 
+    private String tokenSenha;
+
     public UsuarioDTO() {
     }
 
-    public UsuarioDTO(Integer id, String email, String nome, String senha, Long telefone) {
+    public UsuarioDTO(Integer id, String email, String nome, String senha, Long telefone, String tokenSenha) {
         this.id = id;
         this.email = email;
         this.nome = nome;
         this.senha = senha;
         this.telefone = telefone;
+        this.tokenSenha = tokenSenha;
     }
 
     public UsuarioDTO(Usuario usuario) {
@@ -73,5 +76,13 @@ public class UsuarioDTO implements Serializable {
 
     public void setTelefone(Long telefone) {
         this.telefone = telefone;
+    }
+
+    public String getTokenSenha() {
+        return tokenSenha;
+    }
+
+    public void setTokenSenha(String tokenSenha) {
+        this.tokenSenha = tokenSenha;
     }
 }

@@ -26,6 +26,9 @@ public class Usuario implements Serializable {
     @Column(name = "telefone", nullable = false)
     private Long telefone;
 
+    @Column(name = "token_senha")
+    private String tokenSenha;
+
     public Usuario(Integer id, String email, String nome, String senha, Long telefone) {
         this.id = id;
         this.email = email;
@@ -75,5 +78,13 @@ public class Usuario implements Serializable {
 
     public Integer getId() {
         return id;
+    }
+
+    public String getTokenSenha() {
+        return tokenSenha;
+    }
+
+    public void setTokenSenha(String tokenSenha) {
+        this.tokenSenha = tokenSenha;
     }
 }
