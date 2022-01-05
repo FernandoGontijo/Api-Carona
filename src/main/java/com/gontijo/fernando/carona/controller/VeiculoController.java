@@ -33,6 +33,7 @@ public class VeiculoController {
     public ResponseEntity<Veiculo> find(@PathVariable Integer id) {
         Veiculo veiculo = service.buscarVeiculo(id);
         return ResponseEntity.ok().body(veiculo);
+
     }
 
     @RequestMapping(value="/atualizar/{id}", method=RequestMethod.PUT)
